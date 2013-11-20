@@ -12,7 +12,7 @@ function [information] = evaluation(examples, targets, net)
     
     %does the cross validation for each fold then save it to each classdata
     for i = 1:total_folds
-        classifiers{i} = cross_validation(random_examples,random_targets,i);
+        classifiers{i} = cross_validation(random_examples,random_targets,i, net);
     end
     
     
@@ -65,8 +65,8 @@ function [information] = evaluation(examples, targets, net)
             end
 
         end
-        statistics.avg_recall_rates(i) = statistics.avg_recall_rates(i)/(total_folds-nans(2);
-        statistics.avg_precision_rate(i) = statistics.avg_precision_rate(i) /(total_folds-nans(1);
+        statistics.avg_recall_rates(i) = statistics.avg_recall_rates(i)/(total_folds-nans(2));
+        statistics.avg_precision_rate(i) = statistics.avg_precision_rate(i) /(total_folds-nans(1));
         statistics.avg_fold_falpha_measure(i) = statistics.avg_fold_falpha_measure(i) /(total_folds-nans(3));
     end
 end

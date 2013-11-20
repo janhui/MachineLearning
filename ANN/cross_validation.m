@@ -25,10 +25,24 @@ information.falpha_measures = zeros(1,total_classes);
          net.divideParam.trainRatio = 0.67;
          net.divideParam.valRatio = 0.33;
          net.divideParam.testRatio = 0;
-         [net] = train(net{i}, train_exs, train_tars);
+         [net] = train(net, train_exs, train_tars);
     end
     
-
+    %error rates corresponding to each emotion
+    emotion_error_rates = zeros(6, 1);
+    test_tar_len = size(data.test_targets, 1);    
+    binary_targets = zeros(test_tar_len);
+    binary_predictions = zeros(test_tar_len);
+    for emotion = 1:6
+        for i=1:test_tar_len
+            binary_targets(i) = (data.test_targets(i) == emotion);
+            binary_predictions(i) = (information.predictions(i) == emotion);
+        end       
+        
+        emotion_error_rate = nnz(binary_targets - binary_predictions)/test_tar_len;        
+        emotion_error_rates(emotion) = emotion_error_rate;
+    end    
+    
 
     information.predictions = testANN(net, test_exs);
 
@@ -36,7 +50,7 @@ information.falpha_measures = zeros(1,total_classes);
     %predictions made by runing the script and how many got write
     information.conf_matrix = get_conf_matrix(total_classes,data.test_targets, information.predictions);
 
-    %gets the error rate the algorithm produces
+    %gets the general error rate the algorithm produces 
     information.error_rate = get_error_rate(data.test_targets, information.predictions);
 
     for i = 1:total_classes
