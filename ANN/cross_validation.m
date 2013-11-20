@@ -1,25 +1,38 @@
-function [information] = cross_validation(examples, target_attr, fold_num)
+function [information] = cross_validation(examples, target_attr, fold_num, net)
 
 total_classes = 6;
 information = struct('predictions',[], 'conf_matrix',[], 'error_rate',[], 'precision_rates', [], 'recall_rates',[], 'falpha_measures',[]);
 information.precision_rates = zeros(1,total_classes);
 information.recall_rates = zeros(1,total_classes);
 information.falpha_measures = zeros(1,total_classes);
-%initialises empty trees for each emotionas
-generated_trees = cell(1,6);
-
 
     %splits the data k-fold
     data = split_data(examples,target_attr,fold_num);
-
-    %generats the tree according to the training samples. 
-    for i = 1:total_classes
-        generated_trees{i} = TRAIN_TREE(data.train_examples,data.train_targets,i);
+    [train_exs, train_tars] = ANNdata(data.train_examples, data.train_targets);
+    [test_exs, ~] = ANNdata(data.test_examples, data.test_targets);
+    
+    if size(net, 1) == 6
+    %trains ANN according to the training samples. 
+        for i = 1:total_classes
+            net{i}.divideFcn = 'divideint';
+            net{i}.divideParam.trainRatio = 0.67;
+            net{i}.divideParam.valRatio = 0.33;
+            net{i}.divideParam.testRatio = 0;
+            [net{i}] = train(net{i}, train_exs, train_tars(i, :));
+        end
+    else
+         net.divideFcn = 'divideint';
+         net.divideParam.trainRatio = 0.67;
+         net.divideParam.valRatio = 0.33;
+         net.divideParam.testRatio = 0;
+         [net] = train(net{i}, train_exs, train_tars);
     end
+    
 
     %test the trees according to the spec
     %%%%%%%%%%%%%%%5TODO: need to implement!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    information.predictions = testTrees(generated_trees,data.test_examples);
+    % ASK MARCEL
+    information.predictions = testANN(net, test_exs);
 
     %gets the confusion matrix which depends on the actual results and the
     %predictions made by runing the script and how many got write
@@ -27,7 +40,6 @@ generated_trees = cell(1,6);
 
     %gets the error rate the algorithm produces
     information.error_rate = get_error_rate(data.test_targets, information.predictions);
-
 
     for i = 1:total_classes
         information.precision_rates(i) = get_precision_rate(i, information.conf_matrix);
