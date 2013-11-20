@@ -25,7 +25,7 @@ information.falpha_measures = zeros(1,total_classes);
          net.divideParam.trainRatio = 0.67;
          net.divideParam.valRatio = 0.33;
          net.divideParam.testRatio = 0;
-         [net] = train(net{i}, train_exs, train_tars);
+         [net] = train(net, train_exs, train_tars);
     end
     
     %error rates corresponding to each emotion
@@ -36,7 +36,7 @@ information.falpha_measures = zeros(1,total_classes);
     for emotion = 1:6
         for i=1:test_tar_len
             binary_targets(i) = (data.test_targets(i) == emotion);
-            binary_predictions(i) = (info.predictions(i) == emotion);
+            binary_predictions(i) = (information.predictions(i) == emotion);
         end       
         
         emotion_error_rate = nnz(binary_targets - binary_predictions)/test_tar_len;        
