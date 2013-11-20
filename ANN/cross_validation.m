@@ -28,17 +28,30 @@ information.falpha_measures = zeros(1,total_classes);
          [net] = train(net{i}, train_exs, train_tars);
     end
     
+    %error rates corresponding to each emotion
+    emotion_error_rates = zeros(6, 1);
+    test_tar_len = size(data.test_targets, 1);    
+    binary_targets = zeros(test_tar_len);
+    binary_predictions = zeros(test_tar_len);
+    for emotion = 1:6
+        for i=1:test_tar_len
+            binary_targets(i) = (data.test_targets(i) == emotion);
+            binary_predictions(i) = (info.predictions(i) == emotion);
+        end       
+        
+        emotion_error_rate = nnz(binary_targets - binary_predictions)/test_tar_len;        
+        emotion_error_rates(emotion) = emotion_error_rate;
+    end    
+    
 
     %test the trees according to the spec
-    %%%%%%%%%%%%%%%5TODO: need to implement!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    % ASK MARCEL
     information.predictions = testANN(net, test_exs);
 
     %gets the confusion matrix which depends on the actual results and the
     %predictions made by runing the script and how many got write
     information.conf_matrix = get_conf_matrix(total_classes,data.test_targets, information.predictions);
 
-    %gets the error rate the algorithm produces
+    %gets the general error rate the algorithm produces 
     information.error_rate = get_error_rate(data.test_targets, information.predictions);
 
     for i = 1:total_classes
