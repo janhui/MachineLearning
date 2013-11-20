@@ -1,30 +1,28 @@
-function [information] = evaluation(examples, targets)
+function [information] = evaluation(examples, targets, net)
 %cross validation and the avg statistics for all the folds
 
-    statistics = struct('conf_matrix',[],'avg_classification_rate',[],'avg_recall_rates',[],'avg_precision_rate',[],'avg_falpha_measure',[]);
-    class_data = struct('preds', [], 'conf_matrix',[],'err_rate',[],'precision_rate',[],'recall_rate',[],'falpha_measures',[]);
+    statistics = struct('conf_matrix',[],'avg_classification_rate',[],'avg_recall_rates',[],'avg_precision_rate',[],'avg_fold_falpha_measure',[],'avg_class_falpha_measure',[]);
 
-
+    random_examples = examples;
+    random_targets = targets;
     total_classes = 6;
     total_folds = 10;
+    classifiers = cell(1,total_folds);
+
     
     %does the cross validation for each fold then save it to each classdata
     for i = 1:total_folds
-        information = cross_validation(examples,targets,i);
-        class_data(i).preds = information.predictions;
-        class_data(i).conf_matrix = information.conf_matrix;
-        class_data(i).err_rate = information.error_rate;
-        for j = 1:total_classes;
-            class_data(i).precision_rate = information.precision_rates;
-            class_data(i).recall_rate = information.recall_rates;
-            class_data(i).falpha_measures= information.falpha_measures;
-        end    
+        classifiers{i} = cross_validation(random_examples,random_targets,i);
     end
     
     
     statistics.conf_matrix = zeros(total_classes,total_classes);
+    statistics.avg_classification_rate = 0;
+    statistics.avg_class_falpha_measure = zeros(1,total_folds);
     for i = 1:total_folds
-        statistics.conf_matrix = statistics.conf_matrix + class_data(i).conf_matrix;       
+        nans = 0;
+        statistics.conf_matrix = statistics.conf_matrix +classifiers{i}.conf_matrix;
+        statistics.avg_classification_rate = statistics.avg_classification_rate +classifiers{i}.
     end
     
     %calculate the confusion matrix and classification rate. + initialises
@@ -40,9 +38,6 @@ function [information] = evaluation(examples, targets)
     % each classification
     for i = 1:total_classes
         for j = 1:total_folds
-            statistics.avg_recall_rates(i) = statistics.avg_recall_rates(i) + class_data(j).recall_rate(i);
-            statistics.avg_precision_rate(i) = statistics.avg_precision_rate(i) + class_data(j).precision_rate(i);
-            statistics.avg_falpha_measure(i) = statistics.avg_falpha_measure(i) + class_data(j).falpha_measures(i);
     
         end
         statistics.avg_recall_rates(i) = statistics.avg_recall_rates(i)/total_folds;
