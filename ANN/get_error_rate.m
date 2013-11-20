@@ -1,5 +1,6 @@
 %used to get the error rate for each class, gets the avg classification
 %rate (1-error rate)/total_target
+
 function err = get_error_rate(target_labels, pred_labels)
     total_target = length(target_labels);
     

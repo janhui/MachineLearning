@@ -29,9 +29,7 @@ information.falpha_measures = zeros(1,total_classes);
     end
     
 
-    %test the trees according to the spec
-    %%%%%%%%%%%%%%%5TODO: need to implement!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    % ASK MARCEL
+
     information.predictions = testANN(net, test_exs);
 
     %gets the confusion matrix which depends on the actual results and the

@@ -11,7 +11,12 @@ function prec_rate = get_precision_rate(class, conf_matrix)
             false_pos = false_pos +  conf_matrix(j,class);
         end
     end
-        
-    prec_rate = (true_pos / (true_pos +false_pos))*100;
+
+    if false_pos + true_pos == 0
+        prec_rate = -1
+    else
+        prec_rate = (true_pos / (true_pos +false_pos))*100;
+    end
+    
     
 end
