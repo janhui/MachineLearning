@@ -24,6 +24,8 @@ Artificial neural networks (ANNs) are
 \subsection{Cross-validation}
 As instructed, we perform 10-fold cross-validation on both types of neural network using the clean dataset and for each type produce a confusion matrix, and average values of presicion, recall and F_{1} rates per class.  We also calculated the average classification rate.  We updated \textit{cross_validation.m} and \textit{evaluation.m} from Assignment 2: Decision Trees Algorithm to be compatible with this assignment.  Similar to Assignment 2, our \textit{evaluation.m} function takes in all the examples, the corresponding target vector and a neural network as inputs and performs cross-validation by calling \textit{cross_validate.m}  10 times.  Each time, our \textit{cross_validation.m} uses a different fold of data for testing and the other nine folds for training and validation.  Each time,  \textit{cross_validation.m} returns a structre containt the predictions, confusion matrix, error rate, precision rates, recall rates and F_{1} rates.   \textit{evaluation.m} will then store these data with a 1x10 cell array and calculate the final statistics by averaging the individual values.  
 
+\subsection{
+
 \subsection{Flow Chart}
 
 

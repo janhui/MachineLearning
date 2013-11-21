@@ -20,9 +20,9 @@ function [anns] = generate_anns()
                 for l = 1:activationFcn_size
                     n = n + 1;
                     layers = neurons(j)*ones(1, hiddenLayers(k));
-                    [net] = feedforwardnet(layers, trainingFcn(i));
+                    [net] = feedforwardnet(layers, trainingFcn{i});
                     for m = 1:hiddenLayers(k)
-                        net.layers{m}.transferFcn = activationFcn(l);
+                        net.layers{m}.transferFcn = activationFcn{l};
                     end
                     anns{n} = net;
                 end

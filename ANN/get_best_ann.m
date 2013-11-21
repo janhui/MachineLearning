@@ -5,7 +5,7 @@ function [anns] = get_best_ann(x, y)
     performInd = ones(size(nets, 1), 1);
     for i = 1:size(nets)
         [anns{i, 1}, tr] = train_to_opt(nets{i}, x, y);
-        [performInd(i), ~] = get_performance(anns, tr, x, y);
+        [performInd(i), classification_rate] = find_performance(anns{i}, tr, x, y);
     end
     
     [order, id] = sort(performInd, 'descend');

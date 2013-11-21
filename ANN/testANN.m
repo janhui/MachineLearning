@@ -8,7 +8,7 @@ function [ predictions ] = testANN( net, x2 )
         for i=1:6,
             results(:,i) = sim(net{i}, x2);
         end
-        [V, predictions] = max(results');
+        [~, predictions] = max(results');
         predictions = predictions';
     end
 
