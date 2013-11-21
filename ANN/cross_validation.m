@@ -15,15 +15,15 @@ information.falpha_measures = zeros(1,total_classes);
     %trains ANN according to the training samples. 
         for i = 1:total_classes
             net{i}.divideFcn = 'divideint';
-            net{i}.divideParam.trainRatio = 0.67;
-            net{i}.divideParam.valRatio = 0.33;
+            net{i}.divideParam.trainRatio = 0.90;
+            net{i}.divideParam.valRatio = 0.10;
             net{i}.divideParam.testRatio = 0;
             [net{i}] = train(net{i}, train_exs, train_tars(i, :));
         end
     else
          net.divideFcn = 'divideint';
-         net.divideParam.trainRatio = 0.67;
-         net.divideParam.valRatio = 0.33;
+         net.divideParam.trainRatio = 0.90;
+         net.divideParam.valRatio = 0.10;
          net.divideParam.testRatio = 0;
          [net] = train(net, train_exs, train_tars);
     end
