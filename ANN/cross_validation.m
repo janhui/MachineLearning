@@ -1,4 +1,4 @@
-function [information] = cross_validation(examples, target_attr, fold_num, net)
+function [information, emotion_error_rates] = cross_validation(examples, target_attr, fold_num, net)
 
 total_classes = 6;
 information = struct('predictions',[], 'conf_matrix',[], 'error_rate',[], 'precision_rates', [], 'recall_rates',[], 'falpha_measures',[]);
@@ -28,6 +28,8 @@ information.falpha_measures = zeros(1,total_classes);
          [net] = train(net, train_exs, train_tars);
     end
     
+    information.predictions = testANN(net, test_exs);
+    
     %error rates corresponding to each emotion
     emotion_error_rates = zeros(6, 1);
     test_tar_len = size(data.test_targets, 1);    
@@ -44,7 +46,7 @@ information.falpha_measures = zeros(1,total_classes);
     end    
     
 
-    information.predictions = testANN(net, test_exs);
+    
 
     %gets the confusion matrix which depends on the actual results and the
     %predictions made by runing the script and how many got write

@@ -1,4 +1,4 @@
-function [information] = evaluation(examples, targets, net)
+function [statistics] = evaluation(examples, targets, net)
 %cross validation and the avg statistics for all the folds
 
     statistics = struct('conf_matrix',[],'avg_classification_rate',[],'avg_recall_rates',[],'avg_precision_rate',[],'avg_fold_falpha_measure',[],'avg_class_falpha_measure',[]);
