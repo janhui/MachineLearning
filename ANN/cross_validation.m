@@ -29,7 +29,7 @@ information.falpha_measures = zeros(1,total_classes);
     end
     
     information.predictions = testANN(net, test_exs);
-    
+
     %error rates corresponding to each emotion
     emotion_error_rates = zeros(6, 1);
     test_tar_len = size(data.test_targets, 1);    

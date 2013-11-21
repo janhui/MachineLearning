@@ -27,7 +27,7 @@ function [statistics] = evaluation(examples, targets, net)
             if classifiers{i}.falpha_measures(j) == -1
                 nans = nans+1;
             else
-                statistics.avg_class_falpha_measure(i) = statistics.avg_class_falpha_measure(i) + classifiers{i}.falpha_measures(j)
+                statistics.avg_class_falpha_measure(i) = statistics.avg_class_falpha_measure(i) + classifiers{i}.falpha_measures(j);
             end
         end
         statistics.avg_class_falpha_measure(i) = statistics.avg_class_falpha_measure(i) / total_classes-nans; 
@@ -49,17 +49,17 @@ function [statistics] = evaluation(examples, targets, net)
         nans = zeros(1,3);
         for j = 1:total_folds
             if classifiers{j}.precision_rates(i) == -1
-                nans(1) = nans(1)+1
+                nans(1) = nans(1)+1;
             else
                 statistics.avg_precision_rate(i) = statistics.avg_precision_rate(i) + classifiers{j}.precision_rates(i);
             end            
             if classifiers{j}.recall_rates(i) == -1
-                nans(2) = nans(2)+1
+                nans(2) = nans(2)+1;
             else
                 statistics.avg_recall_rates(i) = statistics.avg_recall_rates(i) + classifiers{j}.recall_rates(i);
             end   
             if classifiers{j}.falpha_measures(i) == -1
-                nans(3) = nans(3)+1
+                nans(3) = nans(3)+1;
             else
                 statistics.avg_fold_falpha_measure(i) = statistics.avg_fold_falpha_measure(i) + classifiers{j}.falpha_measures(i);
             end
