@@ -1,5 +1,5 @@
 function [net] = generate_one_ANN(x,y)
-% generate six single-output neural networks (one for classifying each of the 
+% generate one six-output neural networks (one for classifying each of the 
 % six emotions).
 
 	[x2, y2] = ANNdata(x,y);

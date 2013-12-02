@@ -10,7 +10,7 @@ function [net] = generate_six_ANN(x,y)
         net{i}.layers{1}.transferFcn = 'purelin';
         %Configures the input and output layers of the neural network with respect 
         %to the given set of inputs (x) and targets (y).
-        [net{i}] = configure(net, x2, y2);
+        [net{i}] = configure(net{i}, x2, y2(i,:));
     end
 
 end
