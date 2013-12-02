@@ -34,7 +34,7 @@ function [statistics] = evaluation(x,y,similarity_func)
     for i = 1:total_classes
         statistics.avg_recall_rates(i) = get_recall_rate(i, statistics.conf_matrix);
         statistics.avg_precision_rate(i) = get_precision_rate(i, statistics.conf_matrix);
-        statistics.avg_falpha_measure(i) = get_falpha_measure(i, statistics.conf_matrix);
+        statistics.avg_falpha_measure(i) = get_falpha_measure(statistics.avg_recall_rates(i), statistics.avg_precision_rate(i));
     end
 
 end

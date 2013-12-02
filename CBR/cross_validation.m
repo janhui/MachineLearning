@@ -18,8 +18,8 @@ information.falpha_measures = zeros(1,total_classes);
 
     for i = 1:total_classes
         information.precision_rates(i) = get_precision_rate(i, information.conf_matrix);
-        information.recall_rates = get_recall_rate(i,information.conf_matrix);
-        information.falpha_measures = get_falpha_measure(information.recall_rates(i), information.precision_rates(i));
+        information.recall_rates(i) = get_recall_rate(i,information.conf_matrix);
+        information.falpha_measures(i) = get_falpha_measure(information.recall_rates(i), information.precision_rates(i));
     end
 
     err_rates = zeros(6,1);
