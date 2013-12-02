@@ -1,7 +1,7 @@
 function [case_struct] = add_case(case_struct, sing_case)
 
 	for i = 1: size(case_struct.cases,2)
-		if similarity_distance(sing_case,case_struct(i))==0 && sing_case.y ==case_struct.cases(i).y
+		if similarity_distance(sing_case,case_struct.cases(i))==0 && sing_case.y ==case_struct.cases(i).y
             case_struct.cases(i).typicality = case_struct.cases(i).typicality + 1;
             return;
         end

@@ -11,23 +11,27 @@ function [ match_case, case_location ] = retrieve( cbr, newcase )
     match_case = newcase;
     typicality = 0;
     case_location = -1;
-    for i = 1:length(cbr.case)
+    for i = 1:length(cbr.cases)
         switch cbr.similarity_function
             case 'similarity_distance'
-                value = similarity_distance(newcase, cbr.case(i));
+                value = similarity_distance(newcase, cbr.cases(i));
             case 'similarity_weighted'
-                value = similarity_weighted(cbr, newcase, cbr.case(i));
+                value = similarity_weighted(cbr, newcase, cbr.cases(i));
+            otherwise
+                value = similarity_distance(newcase, cbr.cases(i));
         end
         
-        if value < min_value || (value == min_value && cbr.case(i).typicality >= typicality)
+        if value < min_value || (value == min_value && cbr.cases(i).typicality >= typicality)
             min_value = value;
-            match_case = cbr.case(i);
-            typicality = cbr.case(i).typicality;
+            match_case = cbr.cases(i);
+            typicality = cbr.cases(i).typicality;
             if (value == 0)
                 case_location = i;
             else 
                 case_location = -1;
             end
         end
+    end
+end
         
 

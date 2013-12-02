@@ -1,4 +1,4 @@
-function [solvedcase] = reuse(case, newcase)
-	newcase.y = case.y;
+function [solvedcase] = reuse(oldcase, newcase)
+	newcase.y = oldcase.y;
 	solvedcase = newcase;
 end

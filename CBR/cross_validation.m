@@ -10,8 +10,8 @@ information.falpha_measures = zeros(1,total_classes);
 
 
     %splits the data k-fold
-    data = split_data(examples,target_attr,fold_num);
-    cbr = CBRinit(data.train_examples, data.train_targets, similarity_func)
+    data = split_data(x,y,fold_num);
+    cbr = CBRinit(data.train_examples, data.train_targets, similarity_func);
     information.predictions = testCBR(cbr, data.test_examples);
     information.conf_matrix = get_conf_matrix(total_classes,data.test_targets,information.predictions);
     information.error_rate = get_error_rate(data.test_targets,information.predictions);
